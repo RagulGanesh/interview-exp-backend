@@ -52,16 +52,43 @@ app.post("/login", async function (req, res) {
 
 
 //User-register
-app.post("/register", function (req, res) {
-  bcrypt.hash(req.body.password, saltRounds, function (err, hash) {
-    const newUser = new User({
+app.post("/register", async function (req, res) {
+  // let success=false;
+
+
+  
+
+  // bcrypt.hash(req.body.password, saltRounds, function (err, hash) {
+  //   const newUser = new User({
+  //     rollno: req.body.rollno,
+  //     username: req.body.username,
+  //     email: req.body.email,
+  //     password: hash,
+  //   });
+  //   newUser.save();
+  //   res.json(newUser)
+  // });
+  let success=false;
+    
+    
+    try{let user=await User.findOne({rollno:req.body.rollno})
+    if(user){
+        return res.status(400).json({success,error:"Sorry a user with this rollno already exists"})
+    }
+    const salt=await bcrypt.genSalt(10);
+    let secPass=await bcrypt.hash(req.body.password,salt)
+    user = await User.create({
       rollno: req.body.rollno,
-      username: req.body.username,
-      email: req.body.email,
-      password: hash,
-    });
-    newUser.save();
-  });
+          username: req.body.username,
+          email: req.body.email,
+          password: secPass,
+    })
+    
+    success=true
+    res.json({success})}catch(err){
+        console.log(err.message);
+        res.status(500).send("Something went wrong");
+    }
 });
 
 //Blog-create
