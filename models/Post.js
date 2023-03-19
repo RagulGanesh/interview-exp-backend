@@ -18,7 +18,7 @@ mongoose.connect("mongodb://localhost:27017/userDB", {
 const postSchema = new mongoose.Schema({
     rollno : {
         type : Number,
-        unique : true,
+        // unique : true,
         required : true
     },
     username : {
