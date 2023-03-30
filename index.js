@@ -165,6 +165,16 @@ app.get('/getAllPosts',fetchuser,async(req,res)=>{
   }
 })
 
+app.post('/search',fetchuser,async(req,res)=>{
+  try{
+    
+    const posts=await Post.find({tags:req.body.search});
+    res.send({posts});
+  }catch(err){
+    console.log(err);
+  }
+})
+
 // app.patch("/",function(req, res){
 //   Post.update(
 //     {title: articleTitle},
@@ -200,6 +210,8 @@ app.post('/getuser',fetchuser,async(req,res)=>{
       console.log(err);
     }
   })
+
+  
 
   
 

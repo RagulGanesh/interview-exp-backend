@@ -29,10 +29,10 @@ const postSchema = new mongoose.Schema({
         type : String,
         required : true,
     },
-    tags: [{
+    tags: {
         type: String,
         required : true,
-    }],
+    },
     content : {
         type : String,
         required : true,
