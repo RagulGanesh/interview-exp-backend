@@ -110,10 +110,7 @@ app.post("/register", async function (req, res) {
         id:user.id
       }
     }
-
     const authtoken=jwt.sign(data,JWT_SECRET)
-
-    
     success=true
     res.json({success,authtoken})}catch(err){
         console.log(err.message);
